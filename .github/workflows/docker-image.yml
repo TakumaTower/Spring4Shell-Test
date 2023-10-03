@@ -23,10 +23,13 @@ jobs:
           aqua-key: ${{ secrets.AQUA_KEY }}
           aqua-secret: ${{ secrets.AQUA_SECRET }}
           
+      - name: test ls
+        run: ls -lah
+          
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner
         with:
-          args: trivy fs --scanners config,vuln,secret --sast --reachability -v .
+          args: trivy fs --scanners config,vuln,secret --sast --reachability --debug . 
           # To customize which severities to scan for, add the following flag: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
           # To enable SAST scanning, add: --sast
           # To enable reachability scanning, add: --reachability
