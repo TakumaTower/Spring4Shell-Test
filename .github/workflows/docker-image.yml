@@ -24,7 +24,16 @@ jobs:
           aqua-secret: ${{ secrets.AQUA_SECRET }}
           
       - name: test ls
-        run: ls -lah
+        uses: docker://aquasec/aqua-scanner
+        with:
+          args: ls -lah
+        env:
+          AQUA_KEY: ${{ secrets.AQUA_KEY }}
+          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AQUA_URL: https://api.asia-1.supply-chain.cloud.aquasec.com
+          CSPM_URL: https://asia-1.api.cloudsploit.com
+          TRIVY_RUN_AS_PLUGIN: 'aqua'
           
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner
