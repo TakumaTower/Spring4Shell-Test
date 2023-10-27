@@ -75,10 +75,10 @@ jobs:
             # OR the path to the root folder of your project. I.e my-repo/my-app 
             # --artifact-path "${{env.MY_APP_ROOT}}"
   
-# More name:           
-# build:
-#    runs-on: ubuntu-latest
-#   steps:
-#   - uses: actions/checkout@v3
-#   - name: Build the Docker image
-#     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+           build:
+            name: Build, Scan, and Push Docker image
+            runs-on: ubuntu-latest
+            steps:
+             - uses: actions/checkout@v3
+             - name: Build the Docker image
+                run: docker build . --file Dockerfile --tag takumatower/xc_test
