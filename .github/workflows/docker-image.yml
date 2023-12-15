@@ -81,7 +81,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag XCTEST1
+      run: docker build . --file Dockerfile --tag xctest1
       
     - name: Aqua Image Scanner
       run: |
@@ -92,4 +92,4 @@ jobs:
     - name: Push Docker image to repository
       run: |
         docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-        docker push XCTEST1
+        docker push xctest1
