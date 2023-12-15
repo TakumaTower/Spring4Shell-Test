@@ -88,7 +88,7 @@ jobs:
         docker image ls 
         docker login registry.aquasec.com -u xuchao_liu@ensigninfosecurity.com -p Allenwalker12#
         docker pull registry.aquasec.com/scanner:2022.4
-        docker run --rm -v Takumatower:/tmp -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:2022.4 scan -w /tmp --host $AQUA_HOST --token $AQUA_TOKEN --show-negligible --local TakumaTower/spring4shell:demo --htmlfile /tmp/out.html --jsonfile /tmp/out.json > /dev/null
+        docker run -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:2022.4 scan -w /tmp --host $AQUA_HOST --token $AQUA_TOKEN --show-negligible --local TakumaTower/spring4shell:demo --htmlfile /tmp/out.html --jsonfile /tmp/out.json > /dev/null
     - name: Push Docker image to repository
       run: |
         docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
