@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  IMAGE_NAME: takumatower/xc_test:demo
+
 jobs:
   aqua:
     name: Aqua code scanner 
@@ -81,15 +84,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag xctest1
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME
       
     - name: Aqua Image Scanner
       run: |
         docker image ls 
         docker login registry.aquasec.com -u "${{ secrets.AQUA_USER }}" -p "${{ secrets.AQUA_PASSWORD }}"
         docker pull registry.aquasec.com/scanner:2311.3.2
-        docker run -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:2311.3.2 scan -w /tmp --host "${{ secrets.AQUA_HOST }}" --token "${{ secrets.AQUA_TOKEN }}" --show-negligible --local xctest1 --htmlfile /tmp/out.html --jsonfile /tmp/out.json > /dev/null
+        docker run -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:2311.3.2 scan -w /tmp --host "${{ secrets.AQUA_HOST }}" --token "${{ secrets.AQUA_TOKEN }}" --show-negligible --local takumatower/xc_test:demo --htmlfile /tmp/out.html --jsonfile /tmp/out.json > /dev/null
     - name: Push Docker image to repository
       run: |
         docker login --username "${{ secrets.DOCKER_USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD }}"
-        docker push xctest1
+        docker push $IMAGE_NAME
